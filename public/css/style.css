@@ -1,0 +1,60 @@
+/* body {
+    width: 100%;
+    overflow-x: hidden;
+} */
+
+/* bootstrap ======================== */
+header .navbar {
+    background-color: #645CAA;
+}
+
+header ul li a {
+    color: #0F3460 !important;
+}
+
+header ul li a:hover {
+    color: #EBC7E8 !important;
+}
+
+header .active {
+    color: #EBC7E8 !important;
+}
+
+header .dropdown {
+    margin-right: 4rem;
+}
+
+/* define style ================================ */
+.joan-bold,
+.joan {
+    font-family: 'joan';
+}
+
+.joan-bold {
+    font-weight: bold;
+}
+
+.text-purp {
+    color: #16213E;
+}
+
+/* style login ====================================== */
+.form-signin .joan-bold {
+    font-size: 5rem;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
