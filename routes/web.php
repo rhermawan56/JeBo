@@ -19,6 +19,8 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'loginIndex'])->name('login')->middleware('guest');
 
+Route::get('/register', [LoginController::class, 'registerIndex'])->middleware('guest');
+
 Route::post('/login', [LoginController::class, 'loginStore']);
 
 Route::post('/logout', [LoginController::class, 'logout']);

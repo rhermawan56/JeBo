@@ -31,6 +31,13 @@ class LoginController extends Controller
         return back()->with('error', 'Please login again!');
     }
 
+    public function registerIndex()
+    {
+        return view('users.register', [
+            'title' => 'Register'
+        ]);
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

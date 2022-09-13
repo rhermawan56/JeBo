@@ -46,6 +46,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
+                                
 
                             </div>
 
@@ -56,6 +57,7 @@
                                 </label>
                             </div>
                             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                            <p class="text-center"><small>don't have an account? <a href="/register" class="text-decoration-none">Register</a></small></p>
                             <p class="mt-5 mb-3 text-muted">&copy; Je.Bo-2022</p>
                         </form>
                     </div>
