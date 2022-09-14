@@ -12,6 +12,13 @@
             </div>
         @endif
 
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }} <strong>Please Login!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="row row-cols-1 row-cols-lg-2 g-2 justify-content-center">
             <div class="col">
                 <div class="p-3 rounded border shadow">
@@ -32,10 +39,9 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-
                             </div>
 
-                            <div class="form-floating">
+                            <div class="form-floating mb-3">
                                 <input name="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" id="password"
                                     placeholder="Password">
@@ -46,10 +52,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                
-
                             </div>
-
 
                             <div class="checkbox mb-3" hidden>
                                 <label>
@@ -57,7 +60,8 @@
                                 </label>
                             </div>
                             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                            <p class="text-center"><small>don't have an account? <a href="/register" class="text-decoration-none">Register</a></small></p>
+                            <p class="text-center"><small>don't have an account? <a href="/register"
+                                        class="text-decoration-none">Register</a></small></p>
                             <p class="mt-5 mb-3 text-muted">&copy; Je.Bo-2022</p>
                         </form>
                     </div>

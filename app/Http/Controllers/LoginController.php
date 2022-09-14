@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -36,6 +38,28 @@ class LoginController extends Controller
         return view('users.register', [
             'title' => 'Register'
         ]);
+    }
+
+    public function registerStore(Request $request)
+    {
+
+        $rule = [
+            'name' => 'required',
+            'email' => 'required|email:dns',
+            'password' => 'required|min:4',
+            'repassword' => 'required'
+        ];
+
+        if ($request->password != $request->repassword) {
+            $request['repassword'] = null;
+        }
+
+        $validated = $request->validate($rule);
+
+        $validated['password'] = Hash::make($validated['password']);
+
+        User::create($validated);
+        return redirect('/login')->with('success', 'Register have been completed!');
     }
 
     public function logout(Request $request)

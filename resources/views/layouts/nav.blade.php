@@ -9,7 +9,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link {{ $title === 'Home' ? 'active border-bottom' : '' }}" aria-current="page"
-                        href="#">Home</a>
+                        href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
