@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,12 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'loginIndex'])->name('login')->middleware('guest');
 
+Route::post('/login', [LoginController::class, 'loginStore']);
+
 Route::get('/register', [LoginController::class, 'registerIndex'])->middleware('guest');
 
 Route::post('/register', [LoginController::class, 'registerStore'])->middleware('guest');
 
-Route::post('/login', [LoginController::class, 'loginStore']);
-
 Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::resource('/dashboard/admin', DashboardAdminController::class)->middleware('auth');
