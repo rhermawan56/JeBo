@@ -50,11 +50,18 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        @if (auth()->user()->role === 'Admin')
+                        @if (auth()->user()->role === 'admin')
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li>
+                                <form action="/home/{{ auth()->user()->id }}" method="POST">
+                                    @method('put')
+                                    @csrf
+                                    <button class="dropdown-item">Home Admin</button>
+                                </form>
+                            </li>
+                            {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
                         @endif
                     </ul>
                 </div>
