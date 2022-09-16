@@ -25,7 +25,11 @@
             aria-label="Search">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sign out</a>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="nav-link px-3 border-0 bg-transparent">Logout</button>
+                </form>
+                {{-- <a class="nav-link px-3" href="#">Sign out</a> --}}
             </div>
         </div>
     </header>
@@ -41,15 +45,17 @@
                     <h1 class="h2">{{ $header }}</h1>
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        {{ $admin }}
+                        {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        @if (auth()->user()->role === 'Admin')
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        @endif
                     </ul>
                 </div>
                 @yield('application')

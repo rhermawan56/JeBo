@@ -5,7 +5,7 @@
         <div class="container-fluid mb-3">
             <form action="">
                 <div class="row row-cols-1 row-cols-lg-2 g-2">
-                    <div class="col" hidden>
+                    <div class="col">
                         <div class="p-3 border">
                             <input type="number" class="form-control" id="hidden" readonly>
                         </div>

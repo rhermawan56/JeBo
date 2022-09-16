@@ -15,8 +15,7 @@ class DashboardAdminController extends Controller
     {
         return view('admin.index', [
             'title' => 'Admin',
-            'header' => 'Transaction',
-            'admin' => auth()->user()->name
+            'header' => 'Transaction'
         ]);
     }
 
