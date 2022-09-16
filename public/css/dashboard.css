@@ -15,7 +15,7 @@
 }
 
 .product-list:hover {
-  background-color: aqua;
+  background-color: #645caa;
 }
 
 .joan-bold,
@@ -29,6 +29,10 @@
 
 .text-purp {
   color: #16213E;
+}
+
+.bg-purp {
+  background-color: #4b457f;
 }
 
 .feather {

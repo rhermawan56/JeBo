@@ -14,10 +14,10 @@ class EnsureUserHasRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next)
     {
         // @dd($request->user()->role);
-        if ($request->user()->role != $role) {
+        if ($request->user()->role != "admin" || $request->user()->role == '') {
             return redirect('/dashboard/admin');
         }
 

@@ -32,7 +32,6 @@
                     @csrf
                     <button type="submit" class="nav-link px-3 border-0 bg-transparent">Logout</button>
                 </form>
-                {{-- <a class="nav-link px-3" href="#">Sign out</a> --}}
             </div>
         </div>
     </header>

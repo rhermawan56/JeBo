@@ -8,8 +8,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ $title === 'Home' ? 'active border-bottom' : '' }}" aria-current="page"
-                        href="/">Home</a>
+                    @auth
+                        <form action="/home/{{ auth()->user()->id }}" method="POST">
+                            @method('put')
+                            @csrf
+                            <button
+                                class="nav-link border-0 bg-transparent {{ $title === 'Home' ? 'active border-bottom' : '' }}">Home</button>
+                        </form>
+                    @else
+                        <a class="nav-link {{ $title === 'Home' ? 'active border-bottom' : '' }} disabled">Home</a>
+                    @endauth
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
@@ -29,7 +37,7 @@
                             Hi, {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Your Sales</a></li>
+                            <li><a class="dropdown-item" href="/dashboard/admin">Transaction</a></li>
                             {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                             <li>
                                 <hr class="dropdown-divider">

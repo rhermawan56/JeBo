@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role:admin');
+Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role');
+
+Route::get('/', function ()
+{
+   return redirect('/login') ;
+});
+
+Route::get('/home/{id}', function ()
+{
+   Auth::logout();
+   return redirect('/');
+});
 
 Route::get('/login', [LoginController::class, 'loginIndex'])->name('login')->middleware('guest');
 

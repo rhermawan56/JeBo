@@ -5,7 +5,7 @@
         <div class="container-fluid mb-3">
             <form action="">
                 <div class="row row-cols-1 row-cols-lg-2 g-2">
-                    <div class="col">
+                    <div class="col" style="display:none">
                         <div class="p-3 border">
                             <input type="number" class="form-control" id="hidden" readonly>
                         </div>
@@ -15,7 +15,7 @@
                             <label for="Default" class="form-label">Product</label>
                             <div class="position-relative">
                                 <input type="text" class="form-control" id="product">
-                                <div class="product position-absolute bg-primary">
+                                <div class="product position-absolute bg-purp">
                                     <p data-index="1" class="m-1 p-2 text-light product-list">html</p>
                                     <p data-index="2" class="m-1 p-2 text-light product-list">css</p>
                                     <p data-index="3" class="m-1 p-2 text-light product-list">javascript</p>

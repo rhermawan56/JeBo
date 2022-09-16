@@ -1,8 +1,15 @@
 var arr = $('.product-list')
 
+function checking() {
+    const product = $('#product').val()
+    if (product === '') {
+        $('#hidden').val('')
+    }
+}
+
 $('#product').on('keyup', function (params) {
     // const list = $('#product-list p')
-
+    checking()
     for (let index = 0; index < arr.length; index++) {
         const element = arr[index];
         const list = $(element).html().indexOf($(this).val())
@@ -12,7 +19,6 @@ $('#product').on('keyup', function (params) {
         } else {
             $(element).hide()
         }
-
     }
 
 })
@@ -22,6 +28,10 @@ for (let index = 0; index < arr.length; index++) {
     $(element).click(function () {
         $('#product').val($(this).html())
         $('#hidden').val($(this).attr('data-index'))
-        $(element).hide()
+        $(arr).hide()
     })
 }
+
+$(function () {
+    checking();
+})
