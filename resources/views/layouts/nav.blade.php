@@ -1,6 +1,6 @@
 <nav class="navbar p-2 px-3 navbar-expand-lg fixed-top shadow">
     <div class="container-fluid">
-        <a class="navbar-brand joan-bold text-purp fs-2 py-0">Je.Bo</a>
+        <p class="navbar-brand joan-bold text-purp fs-2 py-0 mb-0">Je.Bo</p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="bi bi-list"></span>

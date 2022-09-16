@@ -1,3 +1,7 @@
+.navbar {
+  background-color: #645CAA;
+}
+
 .product {
   z-index: 2;
   width: 100%;
@@ -12,6 +16,19 @@
 
 .product-list:hover {
   background-color: aqua;
+}
+
+.joan-bold,
+.joan {
+  font-family: 'joan';
+}
+
+.joan-bold {
+  font-weight: bold;
+}
+
+.text-purp {
+  color: #16213E;
 }
 
 .feather {
@@ -33,8 +50,10 @@
   bottom: 0;
   /* rtl:remove */
   left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  z-index: 100;
+  /* Behind the navbar */
+  padding: 48px 0 0;
+  /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
@@ -43,7 +62,8 @@
 .sidebar-sticky {
   height: calc(100vh - 48px);
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
 }
 
 .sidebar .nav-link {
@@ -149,7 +169,7 @@
 
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
-      font-size: 3.5rem;
+    font-size: 3.5rem;
   }
 }
 
