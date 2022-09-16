@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
@@ -15,7 +16,8 @@ class DashboardAdminController extends Controller
     {
         return view('admin.index', [
             'title' => 'Admin',
-            'header' => 'Transaction'
+            'header' => 'Transaction',
+            'products' => Product::all()
         ]);
     }
 
@@ -37,7 +39,7 @@ class DashboardAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        @dd($request->all());
     }
 
     /**

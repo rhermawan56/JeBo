@@ -7,12 +7,12 @@ function checking() {
     }
 }
 
-$('#product').on('keyup', function (params) {
+$('#product').on('keyup', function () {
     // const list = $('#product-list p')
     checking()
     for (let index = 0; index < arr.length; index++) {
         const element = arr[index];
-        const list = $(element).html().indexOf($(this).val())
+        const list = $(element).html().toLowerCase().indexOf($(this).val())
         
         if (list > -1 && $(this).val() != "") {
             $(element).show()
