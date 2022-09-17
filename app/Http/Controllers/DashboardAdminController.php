@@ -19,7 +19,7 @@ class DashboardAdminController extends Controller
             'title' => 'Admin',
             'header' => 'Transaction',
             'products' => Product::all(),
-            'transactions' => Transaction::latest()->active()->get()
+            'transactions' => Transaction::active()->get()
         ]);
     }
 
@@ -41,7 +41,19 @@ class DashboardAdminController extends Controller
      */
     public function store(Request $request)
     {
-        @dd($request->all());
+        $rule = [
+            'product_id' => 'required',
+            'order_by' => 'required',
+            'qty' => 'required'
+        ];
+
+        $validated = $request->validate($rule);
+
+        $validated['user_id'] = auth()->user()->id;
+
+        $validated['status'] = "waiting";
+
+        Transaction::create($validated);
     }
 
     /**
@@ -61,9 +73,15 @@ class DashboardAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaction $transaction)
     {
-        //
+        @dd($transaction);
+        return view('admin.index', [
+            'title' => 'Admin',
+            'header' => 'Transaction',
+            'products' => Product::all(),
+            'transactions' => Transaction::active()->get()
+        ]);
     }
 
     /**
@@ -73,9 +91,8 @@ class DashboardAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Transaction $id)
     {
-        //
     }
 
     /**
@@ -87,5 +104,13 @@ class DashboardAdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateDone(Request $request, Transaction $transaction)
+    {
+        $data = $request->status;
+        $trx = Transaction::firstWhere('id', $transaction->id);
+        $trx['status'] = $data;
+        $trx->save();
     }
 }

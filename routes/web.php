@@ -41,4 +41,6 @@ Route::post('/register', [LoginController::class, 'registerStore'])->middleware(
 
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::resource('/dashboard/admin', DashboardAdminController::class)->middleware('auth');
+Route::post('/dashboard/{transaction}', [DashboardAdminController::class, 'updateDone'])->middleware('auth');
+
+Route::resource('/dashboard/transaction', DashboardAdminController::class)->middleware('auth');

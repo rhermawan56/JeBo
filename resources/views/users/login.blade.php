@@ -41,11 +41,14 @@
                                 @enderror
                             </div>
 
-                            <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 position-relative">
                                 <input name="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" id="password"
                                     placeholder="Password">
                                 <label for="floatingPassword">Password</label>
+
+                                <button type="button" class="btn icon icon-eye text-purp-smooth border-0 position-absolute"><i data-feather="eye"></i></button>
+                                <button type="button" class="btn icon icon-eye-off text-purp-smooth border-0 position-absolute hidden"><i data-feather="eye-off"></i></button>
 
                                 @error('password')
                                     <div class="invalid-feedback" style="display: block">

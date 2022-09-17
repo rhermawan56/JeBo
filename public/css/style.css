@@ -38,11 +38,18 @@ header .dropdown {
     color: #16213E;
 }
 
+.text-purp-smooth {
+    color: #645caa;
+}
+
+.hidden {
+    display: none;
+}
+
 /* style login ====================================== */
 .form-signin .joan-bold {
     font-size: 5rem;
 }
-
 
 .form-signin .form-floating:focus-within {
     z-index: 2;
@@ -56,5 +63,7 @@ header .dropdown {
     margin-bottom: -1px;
 }
 
-/* .form-signin input[type="password"] {
-} */
+.icon {
+    top: 0.65rem;
+    right: 1rem;
+}

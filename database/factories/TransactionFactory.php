@@ -19,6 +19,7 @@ class TransactionFactory extends Factory
         return [
             'user_id' => fake()->numberBetween(1, 2),
             'product_id' => fake()->numberBetween(1, 6),
+            'order_by'=> fake()->name(),
             'qty' => fake()->numberBetween(1, 3),
             'status' => 'waiting'
         ];

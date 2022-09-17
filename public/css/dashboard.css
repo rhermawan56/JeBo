@@ -36,6 +36,14 @@
   background-color: #4b457f;
 }
 
+.order button:hover {
+  background-color: #38345f;
+}
+
+.hidden {
+  display: none;
+}
+
 .feather {
   width: 16px;
   height: 16px;
@@ -61,7 +69,6 @@
   /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
-
 
 
 .sidebar-sticky {
