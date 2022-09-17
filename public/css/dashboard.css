@@ -182,4 +182,13 @@
   .sidebar {
     top: 5rem;
   }
+
+  .transaction {
+    background-color: #746db3;
+    width: 100%;
+  }
+
+  .navbar .navbar-brand {
+    width: 100%;
+  }
 }

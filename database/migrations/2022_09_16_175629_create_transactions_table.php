@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('product_id');
             $table->integer('qty');
+            $table->string('status');
             $table->timestamps();
         });
     }

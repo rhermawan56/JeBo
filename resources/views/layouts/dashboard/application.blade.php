@@ -19,14 +19,14 @@
         <p class="navbar-brand col-md-3 col-lg-2 me-0 mb-0 px-3 fs-4 text-center joan-bold text-purp">Je.Bo</p>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation" style="top: 0.65rem;">
             <span class="navbar-toggler-icon"></span>
         </button>
         @if ($header != 'Transaction')
             <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
                 aria-label="Search">
         @endif
-        <div class="navbar-nav">
+        <div class="navbar-nav" data-target="{{ $header }}">
             <div class="nav-item text-nowrap">
                 <form action="/logout" method="POST">
                     @csrf

@@ -18,7 +18,8 @@
                                 <input name="product" type="text" class="form-control" id="product">
                                 <div class="product position-absolute bg-purp">
                                     @foreach ($products as $product)
-                                        <p data-index="{{ $product->id }}" class="m-1 p-2 text-light product-list">{{ $product->product . ' - ' . $product->price }}</p>
+                                        <p data-index="{{ $product->id }}" class="m-1 p-2 text-light product-list">
+                                            {{ $product->product . ' - ' . $product->price }}</p>
                                     @endforeach
                                 </div>
                             </div>
@@ -44,25 +45,32 @@
             </form>
         </div>
     </div>
+
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
+                    <center>
+                        <th scope="col">#</th>
+                        <th scope="col" class="text-center">Product</th>
+                        <th scope="col" class="text-center">Qty</th>
+                        <th scope="col" class="text-center">Price Total</th>
+                        <th scope="col" class="text-center">Status</th>
+                    </center>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                </tr>
+                @foreach ($transactions as $transaction)
+                    <tr>
+                        <center>
+                            <td>{{ $transaction->id }}</td>
+                            <td>{{ $transaction->product->product }}</td>
+                            <td class="text-center">{{ $transaction->qty }}</td>
+                            <td class="text-center">{{ $transaction->qty * $transaction->product->price }}</td>
+                            <td class="text-center">text</td>
+                        </center>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -53,5 +53,6 @@ class ProductSeeder extends Seeder
             'stock' => $this->stock,
             'price' => $this->price
         ]);
+
     }
 }

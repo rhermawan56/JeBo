@@ -7,6 +7,16 @@ function checking() {
     }
 }
 
+function logoutDashboard() {
+    const dataTarget = $('.navbar .navbar-nav').attr('data-target').toLowerCase()
+
+    if (dataTarget === "transaction") {
+        $('.navbar .navbar-nav').addClass(dataTarget)
+    } else {
+        $('.navbar .navbar-nav').removeClass(dataTarget)
+    }
+}
+
 $('#product').on('keyup', function () {
     // const list = $('#product-list p')
     checking()
@@ -33,5 +43,6 @@ for (let index = 0; index < arr.length; index++) {
 }
 
 $(function () {
-    checking();
+    checking()
+    logoutDashboard()
 })

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
@@ -17,7 +18,8 @@ class DashboardAdminController extends Controller
         return view('admin.index', [
             'title' => 'Admin',
             'header' => 'Transaction',
-            'products' => Product::all()
+            'products' => Product::all(),
+            'transactions' => Transaction::latest()->active()->get()
         ]);
     }
 
