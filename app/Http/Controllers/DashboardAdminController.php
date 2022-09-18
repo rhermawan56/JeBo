@@ -22,6 +22,7 @@ class DashboardAdminController extends Controller
             'transactions' => Transaction::active()->get(),
             'transaction' => null
         ]);
+
     }
 
     /**
@@ -75,9 +76,9 @@ class DashboardAdminController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        return view('admin.index', [
+        return view('admin.edit', [
             'title' => 'Admin',
-            'header' => 'Transaction',
+            'header' => 'Edit Transaction',
             'products' => Product::all(),
             'transactions' => Transaction::active()->get(),
             'transaction' => $transaction
@@ -91,8 +92,20 @@ class DashboardAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $id)
+    public function update(Request $request, Transaction $transaction)
     {
+        // @dd($request);
+
+        $rule = [
+            'product_id' => 'required',
+            'order_by' => 'required',
+            'qty' => 'required'
+        ];
+
+        $validated = $request->validate($rule);
+        Transaction::where('id', $transaction->id)->update($validated);
+
+        return redirect('/dashboard/transaction');
     }
 
     /**

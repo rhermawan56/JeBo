@@ -36,6 +36,7 @@
   background-color: #4b457f;
 }
 
+.order a:hover,
 .order button:hover {
   background-color: #38345f;
 }

@@ -69,7 +69,59 @@
                         @endif
                     </ul>
                 </div>
+
                 @yield('application')
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <center>
+                                    <th scope="col">#</th>
+                                    <th scope="col" class="text-center">Order_by</th>
+                                    <th scope="col" class="text-center">Product</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Price Total</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center">Action</th>
+                                </center>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($transactions as $transaction)
+                                @if (date('d.m.y', strtotime(now())) === date('d.m.y', strtotime($transaction->updated_at)))
+                                    <tr>
+                                        <center>
+                                            <td>{{ $transaction->id }}</td>
+                                            <td>{{ $transaction->order_by }}</td>
+                                            <td>{{ $transaction->product->product }}</td>
+                                            <td class="text-center">{{ $transaction->qty }}</td>
+                                            <td class="text-center">
+                                                {{ $transaction->qty * $transaction->product->price }}
+                                            </td>
+                                            <td class="text-center">{{ $transaction->status }}</td>
+                                            <td class="text-center d-flex border justify-content-center">
+                                                <form action="/{{ $transaction->id }}" method="POST">
+                                                    @csrf
+                                                    <input type="text" class="hidden" name="status" value="done"
+                                                        readonly>
+                                                    <button class="btn btn-success badge mx-1"
+                                                        style="line-height: unset"><i
+                                                            data-feather="check-square"></i></button>
+                                                </form>
+                                                <a class="btn btn-primary badge mx-1" style="line-height: unset"
+                                                    href="/dashboard/transaction/{{ $transaction->id }}/edit"><i
+                                                        data-feather="edit"></i></a>
+                                                <button class="btn btn-primary badge mx-1"
+                                                    style="line-height: unset">a</button>
+                                            </td>
+                                        </center>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </main>
         </div>
     </div>
