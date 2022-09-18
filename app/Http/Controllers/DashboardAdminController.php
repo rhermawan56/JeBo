@@ -19,7 +19,8 @@ class DashboardAdminController extends Controller
             'title' => 'Admin',
             'header' => 'Transaction',
             'products' => Product::all(),
-            'transactions' => Transaction::active()->get()
+            'transactions' => Transaction::active()->get(),
+            'transaction' => null
         ]);
     }
 
@@ -48,12 +49,11 @@ class DashboardAdminController extends Controller
         ];
 
         $validated = $request->validate($rule);
-
         $validated['user_id'] = auth()->user()->id;
-
         $validated['status'] = "waiting";
 
         Transaction::create($validated);
+        return redirect('/dashboard/transaction');
     }
 
     /**
@@ -75,12 +75,12 @@ class DashboardAdminController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        @dd($transaction);
         return view('admin.index', [
             'title' => 'Admin',
             'header' => 'Transaction',
             'products' => Product::all(),
-            'transactions' => Transaction::active()->get()
+            'transactions' => Transaction::active()->get(),
+            'transaction' => $transaction
         ]);
     }
 
@@ -108,9 +108,12 @@ class DashboardAdminController extends Controller
 
     public function updateDone(Request $request, Transaction $transaction)
     {
-        $data = $request->status;
-        $trx = Transaction::firstWhere('id', $transaction->id);
-        $trx['status'] = $data;
-        $trx->save();
+
+        $data = [
+            'status' => $request->status
+        ];
+
+        Transaction::where('id', $transaction->id)->update($data);
+        return redirect('/dashboard/transaction');
     }
 }

@@ -20,9 +20,10 @@ function logoutDashboard() {
 $('#product').on('keyup', function () {
     // const list = $('#product-list p')
     checking()
+
     for (let index = 0; index < arr.length; index++) {
         const element = arr[index];
-        const list = $(element).html().toLowerCase().indexOf($(this).val())
+        const list = $(element).html().toLowerCase().indexOf($(this).val().toLowerCase())
         
         if (list > -1 && $(this).val() != "") {
             $(element).show()
@@ -43,6 +44,6 @@ for (let index = 0; index < arr.length; index++) {
 }
 
 $(function () {
-    checking()
+    // checking()
     logoutDashboard()
 })
