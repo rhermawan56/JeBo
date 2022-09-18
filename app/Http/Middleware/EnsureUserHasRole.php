@@ -17,7 +17,7 @@ class EnsureUserHasRole
     public function handle(Request $request, Closure $next)
     {
         // @dd($request->user()->role);
-        if ($request->user()->role != "admin" || $request->user()->role == '') {
+        if (strtolower($request->user()->role) != "admin" || $request->user()->role == '') {
             return redirect('/dashboard/admin');
         }
 

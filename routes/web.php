@@ -28,7 +28,7 @@ Route::get('/', function ()
 Route::get('/home/{id}', function ()
 {
    Auth::logout();
-   return redirect('/');
+   return redirect('/login');
 });
 
 Route::get('/login', [LoginController::class, 'loginIndex'])->name('login')->middleware('guest');
