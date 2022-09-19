@@ -22,7 +22,6 @@ class DashboardAdminController extends Controller
             'transactions' => Transaction::active()->get(),
             'transaction' => null
         ]);
-
     }
 
     /**
@@ -114,9 +113,12 @@ class DashboardAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaction $transaction)
     {
-        //
+        Transaction::where('id', $transaction->id)
+            ->delete();
+
+        return redirect('/dashboard/transaction');
     }
 
     public function updateDone(Request $request, Transaction $transaction)

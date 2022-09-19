@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
     <header class="navbar sticky-top flex-md-nowrap p-0 shadow">
         <p class="navbar-brand col-md-3 col-lg-2 me-0 mb-0 px-3 fs-4 text-center joan-bold text-purp">Je.Bo</p>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
@@ -100,20 +99,24 @@
                                                 {{ $transaction->qty * $transaction->product->price }}
                                             </td>
                                             <td class="text-center">{{ $transaction->status }}</td>
-                                            <td class="text-center d-flex border justify-content-center">
+                                            <td class="text-center d-flex justify-content-center">
                                                 <form action="/{{ $transaction->id }}" method="POST">
                                                     @csrf
                                                     <input type="text" class="hidden" name="status" value="done"
                                                         readonly>
-                                                    <button class="btn btn-success badge mx-1"
-                                                        style="line-height: unset"><i
+                                                    <button class="p-0 btn btn-success mx-1 badge"
+                                                        ><i class="border"
                                                             data-feather="check-square"></i></button>
                                                 </form>
-                                                <a class="btn btn-primary badge mx-1" style="line-height: unset"
-                                                    href="/dashboard/transaction/{{ $transaction->id }}/edit"><i
+                                                <a class="p-0 btn btn-primary mx-1 badge"
+                                                    href="/dashboard/transaction/{{ $transaction->id }}/edit"><i class="border"
                                                         data-feather="edit"></i></a>
-                                                <button class="btn btn-primary badge mx-1"
-                                                    style="line-height: unset">a</button>
+                                                <form action="/dashboard/transaction/{{ $transaction->id }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="p-0 btn btn-danger mx-1 badge"
+                                                        ><small><i class="border" data-feather="x-circle"></i></small></button>
+                                                </form>
                                             </td>
                                         </center>
                                     </tr>

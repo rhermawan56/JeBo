@@ -38,8 +38,7 @@
                                 <div class="product position-absolute bg-purp">
                                     {{-- harus di edit --}}
                                     @foreach ($products as $product)
-                                        <p data-index="{{ $product->id }}" class="m-1 p-2 text-light product-list">
-                                            {{ $product->product . ' - ' . $product->price }}</p>
+                                        <p data-index="{{ $product->id }}" class="m-1 p-2 text-light product-list">{{ $product->product . ' - ' . $product->price }}</p>
                                     @endforeach
                                 </div>
                                 @error('product_id')
