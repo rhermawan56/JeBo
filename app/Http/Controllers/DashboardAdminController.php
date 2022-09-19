@@ -53,7 +53,7 @@ class DashboardAdminController extends Controller
         $validated['status'] = "waiting";
 
         Transaction::create($validated);
-        return redirect('/dashboard/transaction');
+        return redirect('/dashboard/transaction')->with('created', "Order has been made!");
     }
 
     /**
@@ -75,13 +75,17 @@ class DashboardAdminController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        return view('admin.edit', [
-            'title' => 'Admin',
-            'header' => 'Edit Transaction',
-            'products' => Product::all(),
-            'transactions' => Transaction::active()->get(),
-            'transaction' => $transaction
-        ]);
+        if ($transaction->user_id === auth()->user()->id) {
+            return view('admin.edit', [
+                'title' => 'Admin',
+                'header' => 'Edit Transaction',
+                'products' => Product::all(),
+                'transactions' => Transaction::active()->get(),
+                'transaction' => $transaction
+            ]);
+        } else {
+            return redirect('/dashboard/transaction')->with('forbidden', "not allowed!!");
+        }
     }
 
     /**
@@ -104,7 +108,7 @@ class DashboardAdminController extends Controller
         $validated = $request->validate($rule);
         Transaction::where('id', $transaction->id)->update($validated);
 
-        return redirect('/dashboard/transaction');
+        return redirect('/dashboard/transaction')->with('update', 'Order has been updated!');
     }
 
     /**
@@ -118,14 +122,13 @@ class DashboardAdminController extends Controller
         Transaction::where('id', $transaction->id)
             ->delete();
 
-        return redirect('/dashboard/transaction');
+        return redirect('/dashboard/transaction')->with('delete', 'Order has been deleted!');
     }
 
-    public function updateDone(Request $request, Transaction $transaction)
+    public function updateDone(Transaction $transaction)
     {
-
         $data = [
-            'status' => $request->status
+            'status' => "done"
         ];
 
         Transaction::where('id', $transaction->id)->update($data);

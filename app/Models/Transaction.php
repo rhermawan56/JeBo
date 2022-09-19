@@ -24,7 +24,6 @@ class Transaction extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('user_id', auth()->user()->id)
-                ->where('status', 'waiting');
+        return $query->where('user_id', auth()->user()->id);
     }
 }

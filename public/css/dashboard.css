@@ -46,7 +46,8 @@
 }
 
 .feather {
-  
+  width: 1rem;
+  height: 1rem;
 }
 
 /*
@@ -187,7 +188,7 @@
 
 @media (max-width: 767.98px) {
   .sidebar {
-    top: 5rem;
+    top: 3rem;
   }
 
   .transaction {

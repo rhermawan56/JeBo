@@ -69,6 +69,34 @@
                     </ul>
                 </div>
 
+                @if (session()->has('created'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="m-0"><strong>Thanks</strong>, {{ session('created') }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session()->has('update'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="m-0"><strong>Thanks</strong>, {{ session('update') }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session()->has('delete'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <p class="m-0"><strong>Thanks</strong>, {{ session('delete') }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                
+                    @endif
+                @if (session()->has('forbidden'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <p class="m-0"><strong>{{ session('forbidden') }}</strong></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 @yield('application')
 
                 <div class="table-responsive">
@@ -102,20 +130,22 @@
                                             <td class="text-center d-flex justify-content-center">
                                                 <form action="/{{ $transaction->id }}" method="POST">
                                                     @csrf
-                                                    <input type="text" class="hidden" name="status" value="done"
-                                                        readonly>
-                                                    <button class="p-0 btn btn-success mx-1 badge"
-                                                        ><i class="border"
-                                                            data-feather="check-square"></i></button>
+                                                    <button class="btn btn-success badge p-1 mx-1"><span
+                                                            data-feather="check-circle"></span> </button>
                                                 </form>
-                                                <a class="p-0 btn btn-primary mx-1 badge"
-                                                    href="/dashboard/transaction/{{ $transaction->id }}/edit"><i class="border"
-                                                        data-feather="edit"></i></a>
-                                                <form action="/dashboard/transaction/{{ $transaction->id }}" method="POST">
+
+                                                <div>
+                                                    <a href="/dashboard/transaction/{{ $transaction->id }}/edit"
+                                                        class="btn btn-warning badge p-1 mx-1"><span
+                                                            data-feather="edit"></span> </a>
+                                                </div>
+
+                                                <form action="/dashboard/transaction/{{ $transaction->id }}"
+                                                    method="POST">
                                                     @method('delete')
                                                     @csrf
-                                                    <button class="p-0 btn btn-danger mx-1 badge"
-                                                        ><small><i class="border" data-feather="x-circle"></i></small></button>
+                                                    <button class="btn btn-danger badge p-1 mx-1"><span
+                                                            data-feather="check-circle"></span> </button>
                                                 </form>
                                             </td>
                                         </center>
