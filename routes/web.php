@@ -18,17 +18,17 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role');
+Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role:admin');
 
 Route::get('/', function ()
 {
-   return redirect('/login') ;
+   return redirect('/login');
 });
 
 Route::get('/home/{id}', function ()
 {
    Auth::logout();
-   return redirect('/login');
+   return redirect('/login')->with('forbidden', 'Not Allowed!!!');
 });
 
 Route::get('/login/loginas', [LoginController::class, 'loginas'])->middleware('guest');
@@ -45,4 +45,4 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::post('/{transaction}', [DashboardAdminController::class, 'updateDone'])->middleware('auth');
 
-Route::resource('/dashboard/transaction', DashboardAdminController::class)->middleware('auth');
+Route::resource('/dashboard/transaction', DashboardAdminController::class)->middleware('role:admin');

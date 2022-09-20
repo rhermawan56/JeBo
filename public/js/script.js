@@ -22,7 +22,7 @@ var coba;
 for (let index = 0; index < ulLogin.length; index++) {
     const element = ulLogin[index];
     $(element).click(function () {
-        fetch('/login/loginas?role=' + $(this).html())
+        fetch('/login/loginas?role=Admin')
             .then(response => response.json())
             .then(data => $('#email').val(data.email) )
             $('#password').val('password')

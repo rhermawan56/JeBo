@@ -12,6 +12,13 @@
             </div>
         @endif
 
+        @if (session('forbidden'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ session('forbidden') }}</strong> Please, login again!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }} <strong>Please Login!</strong>

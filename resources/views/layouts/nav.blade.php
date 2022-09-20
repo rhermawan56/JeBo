@@ -31,8 +31,8 @@
                     </a>
                     <ul class="dropdown-menu" id="login_as">
                       <li><a class="dropdown-item" href="#">Admin</a></li>
-                      <li><a class="dropdown-item" href="#">Super Admin</a></li>
-                      <li><a class="dropdown-item" href="#">Supervisor</a></li>
+                      {{-- <li><a class="dropdown-item" href="#">Super Admin</a></li>
+                      <li><a class="dropdown-item" href="#">Supervisor</a></li> --}}
                       {{-- <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
                     </ul>
