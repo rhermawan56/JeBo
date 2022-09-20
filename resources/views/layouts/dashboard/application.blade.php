@@ -88,8 +88,7 @@
                         <p class="m-0"><strong>Thanks</strong>, {{ session('delete') }}</p>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                
-                    @endif
+                @endif
                 @if (session()->has('forbidden'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <p class="m-0"><strong>{{ session('forbidden') }}</strong></p>
@@ -127,26 +126,28 @@
                                                 {{ $transaction->qty * $transaction->product->price }}
                                             </td>
                                             <td class="text-center">{{ $transaction->status }}</td>
-                                            <td class="text-center d-flex justify-content-center">
-                                                <form action="/{{ $transaction->id }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-success badge p-1 mx-1"><span
-                                                            data-feather="check-circle"></span> </button>
-                                                </form>
+                                            <td class="text-center border">
+                                                <div class="d-flex justify-content-center">
+                                                    <form action="/{{ $transaction->id }}" method="POST">
+                                                        @csrf
+                                                        <button class="btn btn-success badge p-1 mx-1"><span
+                                                                data-feather="check-circle"></span> </button>
+                                                    </form>
 
-                                                <div>
-                                                    <a href="/dashboard/transaction/{{ $transaction->id }}/edit"
-                                                        class="btn btn-warning badge p-1 mx-1"><span
-                                                            data-feather="edit"></span> </a>
+                                                    <div>
+                                                        <a href="/dashboard/transaction/{{ $transaction->id }}/edit"
+                                                            class="btn btn-warning badge p-1 mx-1"><span
+                                                                data-feather="edit"></span> </a>
+                                                    </div>
+
+                                                    <form action="/dashboard/transaction/{{ $transaction->id }}"
+                                                        method="POST">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button class="btn btn-danger badge p-1 mx-1"><span
+                                                                data-feather="check-circle"></span> </button>
+                                                    </form>
                                                 </div>
-
-                                                <form action="/dashboard/transaction/{{ $transaction->id }}"
-                                                    method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button class="btn btn-danger badge p-1 mx-1"><span
-                                                            data-feather="check-circle"></span> </button>
-                                                </form>
                                             </td>
                                         </center>
                                     </tr>
