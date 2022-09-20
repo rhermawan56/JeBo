@@ -31,6 +31,8 @@ Route::get('/home/{id}', function ()
    return redirect('/login');
 });
 
+Route::get('/login/loginas', [LoginController::class, 'loginas'])->middleware('guest');
+
 Route::get('/login', [LoginController::class, 'loginIndex'])->name('login')->middleware('guest');
 
 Route::post('/login', [LoginController::class, 'loginStore']);

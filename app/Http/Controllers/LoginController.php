@@ -33,6 +33,15 @@ class LoginController extends Controller
         return back()->with('error', 'Please login again!');
     }
 
+    public function loginAs(Request $request)
+    {
+        $user = User::firstWhere('role', $request->role);
+        $email = $user->email;
+        return response()->json([
+            'email' => $email
+        ]);
+    }
+
     public function registerIndex()
     {
         return view('users.register', [

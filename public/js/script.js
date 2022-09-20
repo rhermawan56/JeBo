@@ -16,3 +16,19 @@ for (let index = 0; index < btnIcon.length; index++) {
         }
     })
 }
+
+const ulLogin = document.querySelectorAll('#login_as a')
+var coba;
+for (let index = 0; index < ulLogin.length; index++) {
+    const element = ulLogin[index];
+    $(element).click(function () {
+        fetch('/login/loginas?role=' + $(this).html())
+            .then(response => response.json())
+            .then(data => $('#email').val(data.email) )
+            $('#password').val('password')
+    })
+}
+
+$(function () {
+    // console.log($('#login_as a'))
+})
