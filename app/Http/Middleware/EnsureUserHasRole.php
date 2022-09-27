@@ -16,10 +16,6 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if ($request->user()->role == '') {
-            return redirect('/home/0');
-        }
-
         if ($role == strtolower($request->user()->role)) {
             return $next($request);
         } else {

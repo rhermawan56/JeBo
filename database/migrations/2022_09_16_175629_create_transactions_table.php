@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('product_id');
+            $table->string('order_id')->nullable();
             $table->string('order_by');
             $table->integer('qty');
+            $table->bigInteger('total')->nullable();
             $table->string('status');
             $table->timestamps();
         });

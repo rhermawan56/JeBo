@@ -13,14 +13,15 @@ class DashboardAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.index', [
             'title' => 'Admin',
             'header' => 'Transaction',
             'products' => Product::all(),
             'transactions' => Transaction::active()->get(),
-            'transaction' => null
+            // 'ii' => $request->ii,
+            'ii' => $request->ii
         ]);
     }
 
@@ -42,18 +43,40 @@ class DashboardAdminController extends Controller
      */
     public function store(Request $request)
     {
+
+        // @dd($request->all());
+
         $rule = [
             'product_id' => 'required',
             'order_by' => 'required',
-            'qty' => 'required'
+            'qty' => 'required',
+            'payment_trx' => 'required|gte:' . $request->total_trx
         ];
+
+        if ($request->payment_trx != 0 && $request->total_trx != 0) {
+            unset($rule['payment_trx']);
+        }
+
+        if ($request->select_order_item > 1) {
+            unset($rule['payment_trx']);
+        }
+
 
         $validated = $request->validate($rule);
         $validated['user_id'] = auth()->user()->id;
         $validated['status'] = "waiting";
+        $validated['order_id'] = $request->order_id;
+        $validated['total'] = $request->total;
+
+        // @dd($validated);
 
         Transaction::create($validated);
-        return redirect('/dashboard/transaction')->with('created', "Order has been made!");
+
+        if ($request->select_order_item > 1) {
+            return redirect('/dashboard/transaction?ii=' . $request->select_order_item);
+        } else {
+            return redirect('/dashboard/transaction')->with('created', "Order has been made!");
+        }
     }
 
     /**
