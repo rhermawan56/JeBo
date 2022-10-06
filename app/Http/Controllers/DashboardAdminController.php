@@ -16,12 +16,28 @@ class DashboardAdminController extends Controller
      */
     public function index(Request $request)
     {
+        $randomStr = '';
+        $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $num = '12345';
+
+        $strLength = strlen($str);
+        $numLength = strlen($num);
+
+        for ($i=0; $i < 5; $i++) { 
+            $randomStr .= $str[rand(0, $strLength - 1)];
+        }
+
+        for ($i=0; $i < 3; $i++) { 
+            $randomStr.= $num[rand(0, $numLength - 1)];
+        }
+
         return view('admin.index', [
             'title' => 'Admin',
             'header' => 'Transaction',
             'products' => Product::all(),
             'transactions' => Transaction::active()->get(),
-            'ii' => $request->ii
+            'ii' => $request->ii,
+            'order' => $randomStr
         ]);
     }
 
