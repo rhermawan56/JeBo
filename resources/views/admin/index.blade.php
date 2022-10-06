@@ -15,9 +15,9 @@
                                 <input type="text" class="form-control" id="order_id" name="order_id"
                                     value="{{ $transactions->sortDesc()->first()->order_id }}" class="disabled" readonly>
                             @else
-                                <input type="text" class="form-control" id="order_id" name="order_id"
+                                {{-- <input type="text" class="form-control" id="order_id" name="order_id"
                                     value="{{ fake()->regexify('[A-Z]{5}[0-10]{3}')}}"
-                                    class="disabled" readonly>
+                                    class="disabled" readonly> --}}
                             @endif
                         </div>
                     </div>
