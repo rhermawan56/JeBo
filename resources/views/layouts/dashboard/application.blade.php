@@ -23,10 +23,10 @@
             aria-label="Toggle navigation" style="top: 0.65rem;">
             <span class="navbar-toggler-icon"></span>
         </button>
-        @if ($header != 'Transaction')
+        {{-- @if ($header != 'Transaction')
             <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
                 aria-label="Search">
-        @endif
+        @endif --}}
         <div class="navbar-nav" data-target="{{ $header }}">
             <div class="nav-item text-nowrap">
                 <form action="/logout" method="POST">

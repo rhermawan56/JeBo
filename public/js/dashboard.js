@@ -269,10 +269,6 @@ $('#pay').click(function () {
 })
 
 $('#cancel').click(function () {
-    if ($('#product').val() == '') {
-        $(location).attr('href', '/dashboard/transaction')
-    }
-
     readOnly({
         '#product': false,
         '#Qty': false,
