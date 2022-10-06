@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role:Admin');
+Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('auth');
 
 Route::get('/', function ()
 {
