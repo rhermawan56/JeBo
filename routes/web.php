@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('auth');
+Route::put('/home/{id}', [HomeController::class, 'index'])->middleware('role:Admin');
 
 Route::get('/', function ()
 {
@@ -45,4 +45,4 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::post('/{transaction}', [DashboardAdminController::class, 'updateDone'])->middleware('auth');
 
-Route::resource('/dashboard/transaction', DashboardAdminController::class)->middleware('auth');
+Route::resource('/dashboard/transaction', DashboardAdminController::class)->middleware('role:Admin');

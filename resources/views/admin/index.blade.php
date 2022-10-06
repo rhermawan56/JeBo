@@ -11,14 +11,14 @@
                     <div class="col">
                         <div class="p-3">
                             <label for="order_id" class="form-label">Order_Id</label>
-                            {{-- @if ($ii != null)
+                            @if ($ii != null)
                                 <input type="text" class="form-control" id="order_id" name="order_id"
                                     value="{{ $transactions->sortDesc()->first()->order_id }}" class="disabled" readonly>
                             @else
                                 <input type="text" class="form-control" id="order_id" name="order_id"
-                                    value="{{ fake()->regexify('[A-Z]{5}[0-10]{3}') . $transactions->count() }}"
+                                    value="{{ fake()->regexify('[A-Z]{5}[0-10]{3}')}}"
                                     class="disabled" readonly>
-                            @endif --}}
+                            @endif
                         </div>
                     </div>
 
