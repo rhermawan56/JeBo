@@ -1,176 +1,323 @@
-var arr = $('.product-list')
+// property define
+var priceProduct = $('#product').attr('data-price')
+var productList = document.getElementsByClassName('product-list')
+var priceTotal = $('#total').val()
+var priceProductTotal
 
+// property define edit
+var oldPayment = $('#name-total').val()
+var oldOrder = $('#product').val()
+var oldQty = $('#Qty').val()
 
+// function
+function checkSelectOrderItem() {
+    const orderItem = $('#select_order_item').val()
 
-function checking() {
-    const product = $('#product').val()
-    if (product === '') {
-        $('#hidden').val('')
-        $('#Qty').val(0)
-        $('#name-total').val(dataPrice - dataPrice)
-        $('#total').val(dataTotal)
-    }
-}
-
-function logoutDashboard() {
-    const dataTarget = $('.navbar .navbar-nav').attr('data-target').toLowerCase()
-
-    if (dataTarget === "transaction") {
-        $('.navbar .navbar-nav').addClass(dataTarget)
+    if (orderItem > 1) {
+        classAdd({ '#pay': 'disabled bg-secondary' })
+        classRemove({ '#order-btn': 'disabled bg-secondary' })
+        $('#order-btn').attr('disabled', false)
     } else {
-        $('.navbar .navbar-nav').removeClass(dataTarget)
+        classRemove({ '#pay': 'disabled bg-secondary' })
+        classAdd({ '#order-btn': 'disabled bg-secondary' })
+        $('#order-btn').attr('disabled', true)
     }
 }
 
-var dataPrice = 0
-var dataTotal = parseInt($('#total').val())
-
-function checkPaymentOrder() {
-    const payment = $('#payment').val()
-
-    if (dataTotal != 0 && payment != 0) {
-        if (payment >= dataTotal) {
-            $($("button[type='submit']")[1]).removeClass('disabled')
-            $($("button[type='submit']")[1]).removeClass('bg-secondary')
-        } else {
-            $($("button[type='submit']")[1]).addClass('disabled')
-            $($("button[type='submit']")[1]).addClass('bg-secondary')
-        }
-    }
+function parameterIfInputProductNotEmpty(data = {}) {
+    Object.entries(data).forEach(
+        ([key, value]) => $(key).val(value)
+    );
 }
 
-function checkValueOrderItem() {
-    const check = $('#select_order_item').val()
-    // const
+function formatIdr(params) {
+    params = params.toString().split('').reverse().join('')
+    params = params.match(/(\d{1,3})/g)
+    params = params.join('.').split('').reverse().join('')
 
-    if (check > 1) {
-        $('#total').removeAttr('name')
-        $('#payment').removeAttr('name')
-        $('.for-pay').addClass('hidden')
-
-        if ($($('button[type=submit]')[1]).hasClass('disabled')) {
-            $($('button[type=submit]')[1]).removeClass('disabled')
-            $($('button[type=submit]')[1]).removeClass('bg-secondary')
-        }
-
-    } else {
-        $('#total').attr('name', 'total_trx')
-        $('#payment').attr('name', 'payment_trx')
-        $('.for-pay').removeClass('hidden')
-        $($('button[type=submit]')[1]).addClass('disabled')
-        $($('button[type=submit]')[1]).addClass('bg-secondary')
-    }
+    return 'Rp ' + params
 }
 
-$('#product').on('keyup', function () {
-    // const list = $('#product-list p')
-    checking()
-
-    for (let index = 0; index < arr.length; index++) {
-        const element = arr[index];
-        const list = $(element).html().toLowerCase().indexOf($(this).val().toLowerCase())
-
-        if (list > -1 && $(this).val() != "") {
-            $(element).show()
-        } else {
-            $(element).hide()
-        }
-    }
-})
-
-for (let index = 0; index < arr.length; index++) {
-    const element = arr[index];
-
-    $(element).click(function () {
-        dataPrice = parseInt($(this).attr('data-price'))
-        $('#name-total').val(dataPrice)
-        $('#total').val(dataTotal + dataPrice)
-        $('#product').val($(this).html())
-        $('#Qty').val(1)
-        $('#hidden').val($(this).attr('data-index'))
-        $(arr).hide()
-    })
+function classAdd(data = {}) {
+    Object.entries(data).forEach(
+        ([key, value]) => $(key).addClass(value)
+    )
 }
 
-$('#Qty').change(function () {
-    $('#name-total').val(dataPrice * parseInt($(this).val()))
-    $('#total').val(dataTotal + (dataPrice * parseInt($(this).val())))
-})
+function classRemove(data = {}) {
+    Object.entries(data).forEach(
+        ([key, value]) => $(key).removeClass(value)
+    )
+}
 
-$('#select_order_item').change(function () {
-    checkValueOrderItem()
-})
+function readOnly(data = {}) {
+    Object.entries(data).forEach(
+        ([key, value]) => $(key).attr('readonly', value)
+    )
+}
 
-$('#cancel').click(function () {
-
-    $('#hidden').val('')
-    $('#product').val('')
-    $('#Qty').val('')
-
-    $('#total').val(dataTotal)
-
-    if ($('#payment').val() == 0 || parseInt($('#payment').val()) < parseInt($('#total').val())) {
-
+function sweetAlert(data = []) {
+    // if warning
+    if (Boolean(data['warning'])) {
         Swal.fire({
-            title: 'Payment Please!',
-            text: "Before canceling pay first!",
-            icon: 'warning'
+            icon: data['warning'],
+            title: data['title'],
+            text: data['text']
         }).then((result) => {
             if (result.isConfirmed) {
-                $('#payment').val('')
                 $('#payment').focus()
-                $('button[type=submit]').prop('disabled', true)
             }
         })
-    } else {
-        $(location).prop('href', '/dashboard/transaction')
     }
 
+    // if success
+    if (Boolean(data['success'])) {
+        Swal.fire({
+            icon: data['success'],
+            title: data['title'],
+        }).then((result) => {
+            const orderId = $('#hidden').val()
+            if (orderId != '') {
+                if (!$('#pay').hasClass('pay-edit')) {
+                    data['text'] = 'Please, Click Order Now!'
+                } else {
+                    data['text'] = 'Please, Update Order!'
+                }
+            }
+
+            if (result.isConfirmed) {
+                parameterIfInputProductNotEmpty({
+                    '#change': data['change']
+                })
+
+                Swal.fire({
+                    icon: data['success'],
+                    title: 'Payment Success!',
+                    text: data['text']
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        classAdd({
+                            '#pay': 'disabled bg-secondary'
+                        })
+                        readOnly({
+                            '#order_by': true,
+                            '#product': true,
+                            '#Qty': true,
+                            '#payment': true
+                        })
+
+                        if (orderId != '') {
+                            classRemove({
+                                '#order-btn': 'disabled bg-secondary'
+                            })
+                            $('#order-btn').attr('disabled', false)
+                        } else {
+                            $(location).attr('href', '/dashboard/transaction')
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    // if error
+    if (Boolean(data['error'])) {
+        Swal.fire({
+            icon: data['error'],
+            title: data['title'],
+            text: data['text']
+        })
+    }
+}
+
+function totalForEdit() {
+    const total = $('#total').val()
+    if (total < 0) {
+        readOnly({ '#payment': true })
+        parameterIfInputProductNotEmpty({ '#change': -(parseInt(total)) })
+    }
+}
+
+// event
+$('#product').on('keyup', function () {
+    if ($(this).val() == '') {
+        parameterIfInputProductNotEmpty({
+            '#hidden': null,
+            '#Qty': null
+        })
+        if ($(this).hasClass('product-edit')) {
+            parameterIfInputProductNotEmpty({
+                '#name-total': oldPayment,
+                '#total': 0
+            })
+        } else {
+            parameterIfInputProductNotEmpty({
+                '#name-total': 0,
+                '#total': priceTotal
+            })
+
+        }
+    }
+
+    for (let index = 0; index < productList.length; index++) {
+        const elementProduct = productList[index];
+        var list = $(elementProduct).html().toLowerCase().indexOf($(this).val().toLowerCase())
+
+        if ($(this).val() == '') {
+            $(productList).hide()
+        } else if (list > -1) {
+            $(elementProduct).show()
+        } else {
+            $(elementProduct).hide()
+        }
+
+        $(elementProduct).click(function () {
+            priceProduct = $(elementProduct).attr('data-price')
+            const total = $('#total').val()
+
+            $(productList).hide()
+
+            parameterIfInputProductNotEmpty({
+                '#hidden': $(elementProduct).attr('data-index'),
+                '#product': $(elementProduct).html(),
+                '#Qty': 1,
+            })
+
+            if (!$('#product').hasClass('product-edit')) {
+                parameterIfInputProductNotEmpty({
+                    '#name-total': priceProduct,
+                    '#total': parseInt(priceTotal) + parseInt(priceProduct)
+                })
+            } else {
+                if (oldOrder == $(this).val()) {
+                    parameterIfInputProductNotEmpty({
+                        '#name-total': oldPayment,
+                        '#total': priceTotal
+                    })
+                } else {
+                    parameterIfInputProductNotEmpty({
+                        '#name-total': priceProduct,
+                        '#total': parseInt(priceProduct) - parseInt(oldPayment)
+                    })
+                }
+            }
+
+            totalForEdit()
+        })
+    }
+})
+
+$('#Qty').change(function () {
+    const qty = $(this).val()
+    priceProductTotal = parseInt(priceProduct * qty)
+
+    parameterIfInputProductNotEmpty({
+        '#name-total': priceProductTotal
+    })
+
+    if (!$(this).hasClass('qty-edit')) {
+        parameterIfInputProductNotEmpty({ '#total': parseInt(priceTotal) + parseInt(priceProductTotal) })
+    } else {
+        parameterIfInputProductNotEmpty({ '#total': parseInt(priceProductTotal) - parseInt(oldPayment) })
+    }
+
+    totalForEdit()
 })
 
 $('#pay').click(function () {
-    const change = parseInt($('#payment').val()) - parseInt($('#total').val())
+    const total = parseInt($('#total').val())
+    const payment = parseInt($('#payment').val())
 
-    if (isNaN(change) || $('#payment').val() == 0 || parseInt($('#payment').val()) < parseInt($('#total').val())) {
-        Swal.fire({
-            title: 'Payment Please!',
-            icon: 'error'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $('#payment').val('')
-                $('#payment').focus()
+    if (total == 0) {
+        if ($(this).hasClass('pay-edit')) {
+            if (oldOrder != $('#product').val() && $('#product').val() != '') {
+                sweetAlert({
+                    'success': 'success',
+                    'title': 'Pay : ' + formatIdr(payment) + '</br> Change : ' + formatIdr(payment - total),
+                    'change': (payment - total)
+                })
             }
+        } else {
+            sweetAlert({
+                'error': 'error',
+                'title': 'No Transaction Found!',
+                'text': 'Please, make a transaction first!'
+            })
+        }
+        if (oldOrder != $('#product').val() && oldQty != $('#Qty').val()) {
+            if (!$(this).hasClass('pay-edit')) {
+                sweetAlert({
+                    'error': 'error',
+                    'title': 'No Transaction Found!',
+                    'text': 'Please, make a transaction first!'
+                })
+            }
+        }
+    } else if (payment < total || isNaN(payment - total)) {
+        sweetAlert({
+            'warning': 'warning',
+            'title': 'Invalid payment!',
+            'text': 'Please, check your payment!'
         })
     } else {
-        Swal.fire({
-            title: 'Change: '+change,
-            text: "Pay: "+$('#payment').val(),
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#4b457f',
-            confirmButtonText: 'Done'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Payment Success!',
-                    'Please Click Order Now!',
-                    'success'
-                )
-                $('#payment').prop('readonly', true)
-                $('#pay').addClass('disabled')
-                $('#pay').addClass('bg-secondary')
-                $($('button[type=submit]')[1]).removeClass('disabled')
-                $($('button[type=submit]')[1]).removeClass('bg-secondary')
-                $('button[type=submit]').prop('disabled', false)
-                $('#change').val(change)
-            }
+        sweetAlert({
+            'success': 'success',
+            'title': 'Pay : ' + formatIdr(payment) + '</br> Change : ' + formatIdr(payment - total),
+            'change': (payment - total)
         })
     }
 })
 
+$('#cancel').click(function () {
+    if ($('#product').val() == '') {
+        $(location).attr('href', '/dashboard/transaction')
+    }
+
+    readOnly({
+        '#product': false,
+        '#Qty': false,
+        '#payment': false
+    })
+    classRemove({ '#pay': 'disabled bg-secondary' })
+    classAdd({ '#order-btn': 'disabled bg-secondary' })
+    parameterIfInputProductNotEmpty({
+        '#payment': 0,
+        '#change': 0,
+        '#product': null,
+        '#hidden': null,
+        '#Qty': null,
+        '#name-total': oldPayment,
+        '#total': priceTotal
+    })
+
+    if ($(this).hasClass('cancel-edit')) {
+        if (oldOrder == $('#product').val()) {
+            if (oldQty == $('#Qty').val()) {
+                $(location).attr('href', '/dashboard/transaction')
+            } else {
+                readOnly({'#order_by':false})
+            }
+        }
+    } else {
+        readOnly({'#order_by':false})
+    }
+})
+
+$('#payment').change(function () {
+    const payment = $(this).val()
+
+    if (!$('#order-btn').hasClass('disabled', 'bg-secondary') && payment > 0) {
+        $('#order-btn').attr('disabled', false)
+    } else {
+        $('#order-btn').attr('disabled', true)
+    }
+})
+
+$('#select_order_item').change(function () {
+    checkSelectOrderItem()
+})
 
 $(function () {
-    logoutDashboard()
-    checkValueOrderItem()
-    checkPaymentOrder()
+    checkSelectOrderItem()
+    // console.log(oldOrder, oldQty)
 })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardAdminController extends Controller
 {
@@ -20,7 +21,6 @@ class DashboardAdminController extends Controller
             'header' => 'Transaction',
             'products' => Product::all(),
             'transactions' => Transaction::active()->get(),
-            // 'ii' => $request->ii,
             'ii' => $request->ii
         ]);
     }
@@ -43,30 +43,28 @@ class DashboardAdminController extends Controller
      */
     public function store(Request $request)
     {
-
         // @dd($request->all());
 
         $rule = [
             'product_id' => 'required',
             'order_by' => 'required',
             'qty' => 'required',
-            'payment_trx' => 'required|gte:' . $request->total_trx
+            'payment' => 'gte:'.$request->total
         ];
 
-        if ($request->payment_trx != 0 && $request->total_trx != 0) {
-            unset($rule['payment_trx']);
+        if (! $request->payment < $request->total || $request->select_order_item > 1) {
+            unset($rule['payment']);
         }
 
-        if ($request->select_order_item > 1) {
-            unset($rule['payment_trx']);
-        }
+        $validated = Validator::make($request->all(), $rule, $messages = [
+            'gte' => 'The payment must be greater than or equal to Total.',
+        ])->validate();
 
-
-        $validated = $request->validate($rule);
-        $validated['user_id'] = auth()->user()->id;
         $validated['status'] = "waiting";
         $validated['order_id'] = $request->order_id;
         $validated['total'] = $request->total;
+        $validated['user_id'] = auth()->user()->id;
+        unset($validated['payment']);
 
         // @dd($validated);
 
@@ -120,15 +118,17 @@ class DashboardAdminController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        // @dd($request);
-
+        // @dd($request->all());
         $rule = [
             'product_id' => 'required',
-            'order_by' => 'required',
-            'qty' => 'required'
+            'qty' => 'required',
+            'total' => 'required'
         ];
 
         $validated = $request->validate($rule);
+        
+        // @dd($validated);
+        
         Transaction::where('id', $transaction->id)->update($validated);
 
         return redirect('/dashboard/transaction')->with('update', 'Order has been updated!');

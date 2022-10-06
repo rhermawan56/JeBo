@@ -1,5 +1,3 @@
-{{-- @dd($transactions->where('order_id', $transactions->sortDesc()->first()->order_id)) --}}
-
 @extends('layouts.dashboard.application')
 
 @section('application')
@@ -18,7 +16,7 @@
                                     value="{{ $transactions->sortDesc()->first()->order_id }}" class="disabled" readonly>
                             @else
                                 <input type="text" class="form-control" id="order_id" name="order_id"
-                                    value="{{ fake()->regexify('[A-Z]{5}[0-10]{3}') . $transactions->sortDesc()->first()->id + 1 }}"
+                                    value="{{ fake()->regexify('[A-Z]{5}[0-10]{3}') . $transactions->count() }}"
                                     class="disabled" readonly>
                             @endif
                         </div>
@@ -76,10 +74,10 @@
 
                     <div class="col">
                         <div class="p-3">
-                            <label for="Default" class="form-label">Product</label>
+                            <label for="product" class="form-label">Product</label>
                             <div class="position-relative">
-                                <input type="text" class="form-control @error('product_id') is-invalid @enderror"
-                                    id="product">
+                                <input type="text" data-price="0"
+                                    class="form-control @error('product_id') is-invalid @enderror" id="product">
                                 <div class="product position-absolute bg-purp">
                                     {{-- harus di edit --}}
                                     @foreach ($products as $product)
@@ -134,7 +132,7 @@
 
                     <div class="col">
                         <div class="p-3">
-                            <p class="m-0 form-control border-0 for-pay"><strong>Payment</strong></p>
+                            <p class="m-0 form-control border-0 "><strong>Payment</strong></p>
                             @error('payment_trx')
                                 <div class="invalid-feedback d-block">
                                     {{ $message }}
@@ -145,29 +143,31 @@
 
                     <div class="col">
                         <div class="p-3">
-                            <input type="number" class="form-control for-pay" id="payment" value="0">
+                            <input type="number" class="form-control " id="payment" value="0" name="payment">
+                            @error('payment')
+                                {{ $message }}
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="p-3">
-                            <p class="m-0 form-control border-0 for-pay"><strong>Change</strong></p>
+                            <p class="m-0 form-control border-0 "><strong>Change</strong></p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="p-3">
-                            <input type="number" class="form-control border-0 for-pay" value="0" id="change" readonly>
+                            <input type="number" class="form-control border-0 " value="0" id="change" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="p-3 order">
-                    <button type="submit" class="btn bg-purp text-light disabled bg-secondary">Order Now</button>
-                    <a class="btn bg-purp text-light for-pay" id="pay">Pay</a>
-                    @if ($ii != null)
-                        <a class="btn bg-purp text-light" id="cancel">Cancel</a>
-                    @endif
+                    <button id="order-btn" type="submit" class="btn bg-purp text-light disabled bg-secondary" disabled>Order
+                        Now</button>
+                    <a class="btn bg-purp text-light" id="pay">Pay</a>
+                    <a class="btn bg-purp text-light" id="cancel">Cancel</a>
                 </div>
             </form>
         </div>

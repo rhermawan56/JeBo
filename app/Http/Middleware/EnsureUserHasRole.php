@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureUserHasRole
 {
@@ -16,11 +17,10 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if ($role == strtolower($request->user()->role)) {
-            return $next($request);
-        } else {
+        if ($role != strtolower($request->user()->role)) {
             return redirect('/home/0');
-        }
+        } 
 
+        return $next($request);
     }
 }
